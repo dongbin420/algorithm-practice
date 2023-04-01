@@ -3,8 +3,8 @@ function solution(n) {
     for(let i = 1; i < n; i++) {
         if(n%i === 1) {
             answer = i;
-            break;
+            // break;
+            return answer;
         }
-    }
-    return answer;
+    } 
 }
