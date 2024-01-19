@@ -1,36 +1,51 @@
-const filePath = process.platform === 'linux' ? '/dev/stdin' : 'ans.txt';
-const input = require('fs').readFileSync(filePath).toString().trim().split("\n");
-const ans = [];
-for(let text of input){
-    const stack = [];
-    let isCompare = true;
-    if(text == ".") break;
-    for(let i = 0; i < text.length; i++){
-        if(text[i] == "[" || text[i] == "("){
-            stack.push(text[i]);
-        }
-        else if(text[i] == "]"){
-            if(stack[stack.length - 1] == "["){
-                stack.pop();
-            }
-            else{
-                isCompare = false;
-                break;
-            }
-        }
-        else if(text[i] == ")"){
-            if(stack[stack.length - 1] == "("){
-                stack.pop();
-            }
-            else{
-                isCompare = false;
-                break;
-            }
-        }
-        else if(text[i] == ".") break;
+const fs = require('fs');
+const filePath = process.platform === 'linux' ? '/dev/stdin' : '../input.txt';
+let input = fs.readFileSync(filePath).toString().split('\n').map(line => line.replace(/\r/g, ''));
+
+const stringNum = input.length;
+let answer = '';
+
+for (let i = 0; i < stringNum; i++) {
+  const string = input[i];
+  const stack = [];
+  let isValid = true;
+
+  for (let j = 0; j < string.length; j++) {
+    if (string[j] === '(') {
+      stack.push(string[j]);
     }
-    if(stack.length > 0 || !isCompare) ans.push("no");
-    else ans.push("yes");
+
+    if (string[j] === ')') {
+      if (stack[stack.length - 1] === '(') {
+        stack.pop();
+      } else {
+        isValid = false;
+        break;
+      }
+    }
+
+    if (string[j] === '[') {
+      stack.push(string[j]);
+    }
+
+    if (string[j] === ']') {
+      if (stack[stack.length - 1] === '[') {
+        stack.pop();
+      } else {
+        isValid = false;
+        break;
+      }
+    }
+  }
+
+  if (string.length > 1) {
+    if (isValid === false || stack.length !== 0) {
+      answer += 'no\n';
+    } else {
+      answer += 'yes\n';
+    }
+  }
 }
 
-console.log(ans.join("\n"));
+console.log(answer.trim());
+
