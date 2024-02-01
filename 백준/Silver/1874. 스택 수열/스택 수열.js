@@ -5,25 +5,23 @@ let input = fs.readFileSync(filePath).toString().split('\n').map(line => line.re
 const N = Number(input.shift());
 const stack = [];
 let answer = [];
-let i = 1;
+let current = 1;
 
-
-while (true) {
-  if (stack.length > 0 && Number(input[0]) === stack[stack.length - 1]) {
-    stack.pop();
-    input.shift();
-    answer.push('-');
-  } else if (i <= N) {
-    stack.push(i);
+for (let i = 0; i < N; i++) {
+  while (current <= Number(input[i])) {
+    stack.push(current);
     answer.push('+');
-    i++;
-  } else if (stack.length > 0 && Number(input[0]) !== stack[stack.length - 1]) {
-    console.log('NO');
+    current++;
+  }
 
-    break;
-  } else {
-    console.log(answer.join('\n'));
+  const deletedStack = stack.pop();
+  answer.push('-');
+
+  if (deletedStack !== Number(input[i])) {
+    answer = ['NO'];
 
     break;
   }
 }
+
+console.log(answer.join('\n'));
