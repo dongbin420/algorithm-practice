@@ -15,6 +15,8 @@ for (let i = 0; i < N; i++) {
     for (let j = 2; j < editedInput[i]; j++) {
       if (editedInput[i] % j === 0) {
         isTargetNum = false;
+
+        break;
       }
     }
   }
