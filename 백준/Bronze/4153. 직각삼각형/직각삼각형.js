@@ -16,6 +16,8 @@ for (let i = 0; i < input.length; i++) {
   answer.push(isRight);
 }
 
-if (answer.length > 0) {
-  console.log(answer.join('\n'));
-}
+// if (answer.length > 0) {
+//   console.log(answer.join('\n'));
+// }
+
+console.log(answer.join('\n'));
