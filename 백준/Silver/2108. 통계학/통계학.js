@@ -5,52 +5,30 @@ let input = fs.readFileSync(filePath).toString().trim().split('\n').map(line => 
 const N = input.shift();
 
 let sum = 0;
+const freqMap = new Map();
+input.sort((a, b) => a - b);
 
 for (let i = 0; i < N; i++) {
   sum += input[i];
+  freqMap.set(input[i], (freqMap.get(input[i]) || 0) + 1);
 }
 
-let firstStatisticsValue = (sum / N).toFixed();
+const mean = Math.round(sum / N);
+const median = input[Math.floor(N / 2)];
 
-if (firstStatisticsValue === '-0') {
-  firstStatisticsValue = 0;
-}
+let maxFreq = 0;
+let maxFreqNums = [];
 
-input.sort((a, b) => a - b);
-
-const secondStatisticsValue = input[Math.floor(input.length / 2)];
-
-const map = new Map();
-
-for (let j = 0; j < N; j++) {
-  const key = input[j];
-  const currentValue = map.get(key) || 0;
-  map.set(key, currentValue + 1);
-}
-
-const frequency = [];
-
-for (const [key, value] of map) {
-  frequency.push(value);
-}
-
-const mostFrequency = Math.max(...frequency);
-const mostFrequencyList = [];
-
-for (const [key, value] of map) {
-  if (value === mostFrequency) {
-    mostFrequencyList.push(key);
+for (const [num, freq] of freqMap) {
+  if (freq > maxFreq) {
+    maxFreq = freq;
+    maxFreqNums = [num];
+  } else if (freq === maxFreq) {
+    maxFreqNums.push(num);
   }
 }
 
-let thirdStatisticsValue;
+const maxFreqNum = maxFreqNums.length === 1 ? maxFreqNums[0] : maxFreqNums[1];
+const range = input[N - 1] - input[0];
 
-if (mostFrequencyList.length === 1) {
-  thirdStatisticsValue = mostFrequencyList[0];
-} else {
-  thirdStatisticsValue = mostFrequencyList[1];
-}
-
-const fourthStatisticsValue = Math.max(...input) - Math.min(...input);
-
-console.log([firstStatisticsValue, secondStatisticsValue, thirdStatisticsValue, fourthStatisticsValue].join('\n'));
+console.log([mean, median, maxFreqNum, range].join('\n'));
