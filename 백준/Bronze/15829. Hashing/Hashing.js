@@ -4,11 +4,13 @@ let input = fs.readFileSync(filePath).toString().trim().split('\n').map(line => 
 
 const L = Number(input.shift());
 const inputAlphabet = input[0];
-let hashValue = 0;
+let hashValue = BigInt(0);
+const M = BigInt(1234567891);
+const r = BigInt(31);
 
 for (let i = 0; i < L; i++) {
-  let position = inputAlphabet.charCodeAt(i) - 96;
-  hashValue += position * 31**i;
+  let position = BigInt(inputAlphabet.charCodeAt(i) - 96);
+  hashValue += position * (r**BigInt(i));
 }
 
-console.log(hashValue);
+console.log(String(hashValue % M));
