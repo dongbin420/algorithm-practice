@@ -7,8 +7,8 @@ let [length, width, B] = firstInput.split(' ').map(Number);
 
 const siteForHouse = input.map(line => line.split(' ').map(Number));
 
-let minHeight = 256;
-let maxHeight = 0;
+let minHeight = 256; // 높이는 256보다 클 수 없다.
+let maxHeight = 0; // 높이는 0보다 작을 수 없다.
 
 for (let i = 0; i < length; i++) {
   for (let j = 0; j < width; j++) {
@@ -17,8 +17,8 @@ for (let i = 0; i < length; i++) {
   }
 }
 
-let resultTime = Infinity;
-let resultHeight = -1;
+let resultTime = Infinity; // resultTime은 이보다 클 수 없다.
+let resultHeight = -1; // resultHeight는 -1보다 무조건 크다.
 
 for (let k = minHeight; k <= maxHeight; k++) {
   let time = 0;
@@ -39,7 +39,7 @@ for (let k = minHeight; k <= maxHeight; k++) {
   }
 
   if (inventory >= 0) {
-    if (time < resultTime || (time === resultTime && k > resultHeight)) {
+    if (time <= resultTime) {
       resultTime = time;
       resultHeight = k;
     }
