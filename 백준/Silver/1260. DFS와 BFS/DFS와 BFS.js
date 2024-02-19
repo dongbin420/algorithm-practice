@@ -18,30 +18,30 @@ const bfsPrintArr = [];
 
 function dfs(vertex) {
   // 스택을 이용한 방법
-  const stack = [vertex];
+  // const stack = [vertex];
   
-  while (stack.length !== 0) {
-    vertex = stack.pop();
-    if (dfsVisited[vertex]) continue;
-    dfsVisited[vertex] = true;
-    dfsPrintArr.push(vertex);
+  // while (stack.length !== 0) {
+  //   vertex = stack.pop();
+  //   if (dfsVisited[vertex]) continue;
+  //   dfsVisited[vertex] = true;
+  //   dfsPrintArr.push(vertex);
 
-    for (let i = numOfVertex; i >= 1; i--) {
-      if (graph[vertex][i] === 1 && dfsVisited[i] === false) {
-        stack.push(i);
-      }
-    }
-  }
-
-  // 재귀를 이용한 방법
-  // dfsVisited[vertex] = true;
-  // dfsPrintArr.push(vertex);
-
-  // for (let i = 1; i <= numOfVertex; i++) {
-  //   if (graph[vertex][i] === 1 && dfsVisited[i] === false) {
-  //     dfs(i);
+  //   for (let i = numOfVertex; i >= 1; i--) {
+  //     if (graph[vertex][i] === 1 && dfsVisited[i] === false) {
+  //       stack.push(i);
+  //     }
   //   }
   // }
+
+  // 재귀를 이용한 방법
+  dfsVisited[vertex] = true;
+  dfsPrintArr.push(vertex);
+
+  for (let i = 1; i <= numOfVertex; i++) {
+    if (graph[vertex][i] === 1 && dfsVisited[i] === false) {
+      dfs(i);
+    }
+  }
 }
 
 function bfs(vertex) {
