@@ -10,8 +10,8 @@ const fibonacciMemo = (n) => {
   if (n === 1) return [0, 1];
 
   if(!memo[n]) {
-    const [zero1, one1] = fibonacciMemo(n - 1, memo);
-    const [zero2, one2] = fibonacciMemo(n - 2, memo);
+    const [zero1, one1] = fibonacciMemo(n - 1);
+    const [zero2, one2] = fibonacciMemo(n - 2);
     memo[n] = [zero1 + zero2, one1 + one2];
   }
 
