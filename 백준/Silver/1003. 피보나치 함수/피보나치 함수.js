@@ -3,8 +3,9 @@ const filePath = process.platform === 'linux' ? '/dev/stdin' : '../../input.txt'
 let input = fs.readFileSync(filePath).toString().trim().split('\n').map(line => Number(line.replace(/\r/g, '')));
 
 const T = input.shift();
+const memo = [];
 
-const fibonacciMemo = (n, memo) => {
+const fibonacciMemo = (n) => {
   if (n === 0) return [1, 0];
   if (n === 1) return [0, 1];
 
@@ -18,7 +19,5 @@ const fibonacciMemo = (n, memo) => {
 }
 
 input.forEach((target) => {
-  const memo = [];
-  const [zero, one] = fibonacciMemo(target, memo);
-  console.log(`${zero} ${one}`);
+  console.log(fibonacciMemo(target).join(' '));
 })
