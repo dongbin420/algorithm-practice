@@ -5,11 +5,14 @@ let input = fs.readFileSync(filePath).toString().trim();
 const inputNum = Number(input);
 const dp = Array(inputNum + 1);
 
-dp[1] = 1 % 10007;
-dp[2] = 2 % 10007;
+const getTheWays = (length) => {
+  if (length <= 2) return length % 10007;
 
-for (let i = 3; i <= inputNum; i++) {
-  dp[i] = (dp[i - 1] + dp[i - 2]) % 10007;
+  if (!dp[length]) {
+    dp[length] = (getTheWays(length - 2) + getTheWays(length - 1)) % 10007;
+  }
+
+  return dp[length];
 }
 
-console.log(dp[inputNum]);
+console.log(getTheWays(inputNum));
