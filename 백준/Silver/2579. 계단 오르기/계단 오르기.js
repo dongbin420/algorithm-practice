@@ -2,18 +2,15 @@ const fs = require('fs');
 const filePath = process.platform === 'linux' ? '/dev/stdin' : '../../input.txt';
 let input = fs.readFileSync(filePath).toString().trim().split('\n').map(line => Number(line.replace(/\r/g, '')));
 
-const STAIR_NUM = input.shift();
-const DP_WITH_PREV = Array(STAIR_NUM + 1).fill(0);
-const DP_WITHOUT_PREV = Array(STAIR_NUM + 1).fill(0);
+const STAIR_NUM = input[0];
+const DP = Array(STAIR_NUM + 1).fill(0);
 
-DP_WITH_PREV[1] = input[0];
-DP_WITHOUT_PREV[1] = input[0];
-DP_WITH_PREV[2] = input[0] + input[1];
-DP_WITHOUT_PREV[2] = input[1]; 
+DP[1] = input[1];
+DP[2] = input[1] + input[2];
+DP[3] = Math.max(input[1] + input[3], input[2] + input[3]);
 
-for (let i = 3; i <= STAIR_NUM; i++) {
-  DP_WITH_PREV[i] = DP_WITHOUT_PREV[i - 1] + input[i - 1];
-  DP_WITHOUT_PREV[i] = Math.max(DP_WITH_PREV[i - 2], DP_WITHOUT_PREV[i - 2]) + input[i - 1]; 
+for (let i = 4; i <= STAIR_NUM; i++) {
+  DP[i] = Math.max(input[i] + input[i - 1] + DP[i - 3], input[i] + DP[i - 2]); // 이전 계단을 밟았냐 안 밟았냐를 기준으로 최댓 값을 구함
 }
 
-console.log(Math.max(DP_WITH_PREV[STAIR_NUM], DP_WITHOUT_PREV[STAIR_NUM]));
+console.log(DP[STAIR_NUM]);
