@@ -7,19 +7,16 @@ const MAX = 100001;
 let visitTimes = Array(MAX).fill(0);
 let queue = [N];
 
-visitTimes[N] = 1;
-
 while (queue.length !== 0) {
   const now = queue.shift();
 
   if (now === K) {
-    console.log(visitTimes[now] - 1);
+    console.log(visitTimes[now]);
     break;
   }
 
   for (let next of [now - 1, now + 1, now * 2]) {
-    if (next < 0 || next >= MAX) continue;
-    if (visitTimes[next] === 0) {
+    if (next >= 0 && next < MAX && visitTimes[next] === 0) {
       visitTimes[next] = visitTimes[now] + 1;
       queue.push(next);
     }
