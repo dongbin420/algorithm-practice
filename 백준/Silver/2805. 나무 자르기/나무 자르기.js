@@ -9,7 +9,7 @@ let low = 0;
 let high = Math.max(...trees);
 let answer = 0;
 
-while (low <= high) {
+while (low <= high) { 
   let mid = Math.floor((low + high) / 2);
   let total = 0;
 
