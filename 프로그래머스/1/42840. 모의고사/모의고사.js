@@ -23,3 +23,7 @@ function solution(answers) {
     
     return winner.sort((a, b) => a - b);
 }
+
+// if (answers[i] === patterns[j][i % patterns[j].length])
+// 위 조건문이 이 문제의 사실상 전부다. 패턴이 있는 것을 활용해서 이 조건문을
+// 만들어 낼 수 있어야 함..
