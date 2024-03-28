@@ -15,6 +15,6 @@ for (let i = 0; i < sees.length; i++) {
 }
 
 picks.sort();
+picks.unshift(picks.length);
 
-console.log(picks.length);
 console.log(picks.join('\n'));
