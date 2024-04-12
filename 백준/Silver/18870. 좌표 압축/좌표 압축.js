@@ -4,19 +4,23 @@ let input = fs.readFileSync(filePath).toString().trim().split('\n').map(line => 
 
 const N = Number(input.shift());
 input = input[0].split(' ').map(Number);
-const answer = [];
-const sortedInput = input.slice().sort((a, b) => a - b);
-const numMap = new Map();
-let cnt = 0;
+const sortedInput = Array.from(new Set(input)).sort((a, b) => a - b);
 
-for (let i = 0; i < N; i++) {
-  if (i === 0 || sortedInput[i] !== sortedInput[i - 1]) {
-    numMap.set(sortedInput[i], cnt++);
+function getCompressed(num) {
+  let start = 0;
+  let end = sortedInput.length - 1;
+
+  while (start < end) {
+    let mid = Math.floor((start + end) / 2);
+
+    if (sortedInput[mid] < num) {
+      start = mid + 1;
+    } else {
+      end = mid;
+    }
   }
+
+  return end;
 }
 
-for (let i = 0; i < N; i++) {
-  answer.push(numMap.get(input[i]));
-}
-
-console.log(answer.join(' '));
+console.log(input.map((num) => getCompressed(num)).join(' '));
