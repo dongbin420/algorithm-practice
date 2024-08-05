@@ -1,18 +1,18 @@
-const fs = require("fs");
-const filePath = process.platform === "linux" ? "/dev/stdin" : "../input.txt";
-let input = fs.readFileSync(filePath).toString().split("\n");
+const fs = require('fs');
+const filePath = process.platform === 'linux' ? '/dev/stdin' : '../../input.txt';
+let input = fs.readFileSync(filePath).toString().split('\n');
 
-let numOfPeople = +input[0];
-let timePerPerson = input[1].split(' ').map(Number);
+const N = Number(input.shift());
+const editedInput = input[0]
+  .split(' ')
+  .map(Number)
+  .sort((a, b) => a - b);
+const sumArr = [];
+let sum = 0;
 
-timePerPerson.sort((a, b) => a - b);
-
-let cal = 0;
-let answer = 0;
-
-for(let i = 0; i < timePerPerson.length; i++) {
-    cal = cal + timePerPerson[i];
-    answer = answer + cal;
+for (let i = 0; i < N; i++) {
+  sum += editedInput[i];
+  sumArr.push(sum);
 }
 
-console.log(answer);
+console.log(sumArr.reduce((acc, cur) => acc + cur, 0));
