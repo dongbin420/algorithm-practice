@@ -1,15 +1,20 @@
 const fs = require('fs');
-const filePath = process.platform === 'linux' ? '/dev/stdin' : '../input.txt';
+const filePath = process.platform === 'linux' ? '/dev/stdin' : '../../input.txt';
 let input = fs.readFileSync(filePath).toString();
 
-let subExpression = input.split('-');
-let result = 0;
-subExpression.map((str, index) =>
-  str
+const subExpression = input.split('-');
+
+const sumSubExpression = (expression) => {
+  return expression
     .split('+')
-    .forEach((num) =>
-      index === 0 ? (result += Number(num)) : (result -= Number(num))
-    )
-);
+    .map(Number)
+    .reduce((acc, cur) => acc + cur, 0);
+};
+
+let result = sumSubExpression(subExpression[0]);
+
+for (let i = 1; i < subExpression.length; i++) {
+  result -= sumSubExpression(subExpression[i]);
+}
 
 console.log(result);
