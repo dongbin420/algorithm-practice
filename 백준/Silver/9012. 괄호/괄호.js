@@ -1,35 +1,24 @@
 const fs = require('fs');
-const filePath = process.platform === 'linux' ? '/dev/stdin' : '../input.txt';
-let input = fs.readFileSync(filePath).toString().split('\n');
+const filePath = process.platform === 'linux' ? '/dev/stdin' : '../../input.txt';
+let input = fs
+  .readFileSync(filePath)
+  .toString()
+  .split('\n')
+  .map((line) => line.replace(/\r/g, ''));
 
-const testCase = Number(input.shift());
-let answer = '';
+const T = Number(input.shift());
+const answer = [];
 
-for (let i = 0; i < testCase; i++) {
-  const stack = [];
-  const parentheses = input[i].trim();
-  let isValid = true;
+for (let i = 0; i < T; i++) {
+  let cnt = 0;
 
-  for (let j = 0; j < parentheses.length; j++) {
-    if (parentheses[j] === '(') {
-      stack.push(parentheses[j]);
-    }
+  for (let j = 0; j < input[i].length; j++) {
+    cnt += input[i][j] === '(' ? 1 : -1;
 
-    if (parentheses[j] === ')') {
-      if (stack.length > 0) {
-        stack.pop();
-      } else {
-        isValid = false;
-        break;
-      }
-    }
+    if (cnt < 0) break;
   }
 
-  if (stack.length === 0 && isValid) {
-    answer = answer + 'YES\n';
-  } else {
-    answer = answer + 'NO\n';
-  }
+  cnt === 0 ? answer.push('YES') : answer.push('NO');
 }
 
-console.log(answer.trim());
+console.log(answer.join('\n'));
