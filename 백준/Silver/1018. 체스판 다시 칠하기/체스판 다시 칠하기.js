@@ -1,37 +1,53 @@
 const fs = require('fs');
-const filePath = process.platform === 'linux' ? '/dev/stdin' : '../input.txt';
-let input = fs.readFileSync(filePath).toString().split('\n').map(line => line.replace(/\r/g, ''));
+const filePath = process.platform === 'linux' ? '/dev/stdin' : '../../input.txt';
+let input = fs
+  .readFileSync(filePath)
+  .toString()
+  .split('\n')
+  .map((line) => line.replace(/\r/g, ''));
 
-const [firstNum, secondNum] = input[0].split(' ').map(num => Number(num));
-input.shift();
+const [N, M] = input.shift().split(' ').map(Number);
+const numOfSquare = [];
+const whitePattern = [
+  'WBWBWBWB',
+  'BWBWBWBW',
+  'WBWBWBWB',
+  'BWBWBWBW',
+  'WBWBWBWB',
+  'BWBWBWBW',
+  'WBWBWBWB',
+  'BWBWBWBW',
+];
+const blackPattern = [
+  'BWBWBWBW',
+  'WBWBWBWB',
+  'BWBWBWBW',
+  'WBWBWBWB',
+  'BWBWBWBW',
+  'WBWBWBWB',
+  'BWBWBWBW',
+  'WBWBWBWB',
+];
 
-function countMismatch(row, col, input) {
-    const line = ['WBWBWBWB', 'BWBWBWBW'];
-    let count = 0;
+const checkChessBoard = (startX, startY, pattern) => {
+  let cnt = 0;
 
-    for (let l = 0; l < 8; l++) {
-        for (let m = 0; m < 8; m++) {
-            if (input[row + l][col + m] !== line[l % 2][m]) {
-              count++;
-            }
-        }
+  for (let i = 0; i < 8; i++) {
+    for (let j = 0; j < 8; j++) {
+      if (input[startX + i][startY + j] !== pattern[i][j]) {
+        cnt++;
+      }
     }
+  }
 
-    return count;
+  return cnt;
+};
+
+for (let k = 0; k <= N - 8; k++) {
+  for (let l = 0; l <= M - 8; l++) {
+    numOfSquare.push(checkChessBoard(k, l, whitePattern));
+    numOfSquare.push(checkChessBoard(k, l, blackPattern));
+  }
 }
 
-function findMinimumMismatch(firstNum, secondNum, input) {
-    const answer = [];
-
-    for (let i = 0; i <= firstNum - 8; i++) {
-        for (let j = 0; j <= secondNum - 8; j++) {
-            const count = countMismatch(i, j, input);
-            answer.push(count, 64-count);
-        }
-    }
-
-    return Math.min(...answer);
-}
-
-const minimum = findMinimumMismatch(firstNum, secondNum, input); 
-console.log(minimum);
+console.log(Math.min(...numOfSquare));
