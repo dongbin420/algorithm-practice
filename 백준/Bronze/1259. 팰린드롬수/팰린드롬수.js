@@ -1,19 +1,19 @@
 const fs = require('fs');
-const filePath = process.platform === 'linux' ? '/dev/stdin' : '../input.txt';
-let input = fs.readFileSync(filePath).toString().split('\n').map(line => line.replace(/\r/g, ''));
+const filePath = process.platform === 'linux' ? '/dev/stdin' : '../../input.txt';
+let input = fs
+  .readFileSync(filePath)
+  .toString()
+  .split('\n')
+  .map((line) => line.replace(/\r/g, ''));
 
 for (let i = 0; i < input.length; i++) {
   if (input[i] === '0') {
     break;
   }
 
-  let editedNum = '';
+  const reversed = input[i].split('').reverse().join('');
 
-  for (let j = input[i].length - 1; j >= 0; j--) {
-    editedNum += input[i][j];
-  }
-
-  if (input[i] === editedNum) {
+  if (input[i] === reversed) {
     console.log('yes');
   } else {
     console.log('no');
