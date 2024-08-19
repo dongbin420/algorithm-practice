@@ -17,6 +17,10 @@ while (low <= high) {
 
   if (cutCable < targetNum) {
     high = mid - 1;
+  } else if (cutCable === targetNum) {
+    result = mid;
+
+    break;
   } else {
     result = mid;
     low = mid + 1;
