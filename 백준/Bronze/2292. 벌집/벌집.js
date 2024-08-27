@@ -2,19 +2,17 @@ const fs = require('fs');
 const filePath = process.platform === 'linux' ? '/dev/stdin' : '../../input.txt';
 let input = fs.readFileSync(filePath).toString();
 
-const editedInput = Number(input);
+let numInput = Number(input);
+let currentRoom = 1;
+let roomCnt = 1;
 
-function findMinimumRoom(n) {
-  let rooms = 1;
-  let count = 1;
+while (true) {
+  if (numInput <= currentRoom) {
+    console.log(roomCnt);
 
-  while (rooms < n) {
-    rooms += 6 * count;
-    count++;
+    break;
   }
 
-  return count;
+  currentRoom += 6 * roomCnt;
+  roomCnt++;
 }
-
-const result = findMinimumRoom(editedInput);
-console.log(result);
