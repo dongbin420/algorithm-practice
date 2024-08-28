@@ -11,14 +11,9 @@ const cards = input[0].split(' ').map(Number);
 let sum = 0;
 
 for (let i = 0; i < N; i++) {
-  let firstNum = cards[i];
-
   for (let j = i + 1; j < N; j++) {
-    let secondNum = cards[j];
-
     for (let k = j + 1; k < N; k++) {
-      let thirdNum = cards[k];
-      let sumCandidate = firstNum + secondNum + thirdNum;
+      let sumCandidate = cards[i] + cards[j] + cards[k];
 
       if (sum < sumCandidate && sumCandidate <= M) {
         sum = sumCandidate;
