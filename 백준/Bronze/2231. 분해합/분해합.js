@@ -2,27 +2,28 @@ const fs = require('fs');
 const filePath = process.platform === 'linux' ? '/dev/stdin' : '../../input.txt';
 let input = fs.readFileSync(filePath).toString().trim();
 
-const editedInput = Number(input);
-let answerNum = 1;
-const answer = [];
+const inputNum = Number(input);
+let constructor = 1;
+let hasConstructor = false;
 
-while (answerNum < editedInput) {
-  const stringAnswerNum = String(answerNum);
-  let sum = answerNum;
+while (constructor < inputNum) {
+  const stringConstructor = String(constructor);
+  let sum = constructor;
 
-  for (let i = 0; i < stringAnswerNum.length; i++) {
-    sum += Number(stringAnswerNum[i]);
+  for (let i = 0; i < stringConstructor.length; i++) {
+    sum += Number(stringConstructor[i]);
   }
 
-  if (sum === editedInput) {
-    answer.push(answerNum);
+  if (inputNum === sum) {
+    console.log(constructor);
+    hasConstructor = true;
+
+    break;
   }
 
-  answerNum++;
+  constructor++;
 }
 
-if (answer.length > 0) {
-  console.log(Math.min(...answer));
-} else {
-  console.log('0');
+if (!hasConstructor) {
+  console.log(0);
 }
