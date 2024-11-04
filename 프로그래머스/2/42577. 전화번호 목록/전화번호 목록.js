@@ -5,6 +5,13 @@ function solution(phone_book) {
         for (let j = 1; j < phone_book[i].length; j++) {
             const startNum = phone_book[i].slice(0, j);
             
+            // for (let k = 0; k < phone_book.length; k++) {
+            //     if (k !== i && startNum === phone_book[k]) {
+            //         return false
+            //     }
+            // }
+            
+            // set을 이용해서 해시테이블 방식을 쓰는 이유는, 위의 for문을 쓰면 시간 초과가 나고, set의 메서드인 has를 이용해서 계산하면 시간 초과가 나지 않기 때문(has메서드는 O(1), for문은 O(n))
             if (setOfPhoneBook.has(startNum)) {
                 return false;
             }
