@@ -1,3 +1,44 @@
+// function solution(genres, plays) {
+//     const musicObj = {};
+//     const bestAlbum = [];
+    
+//     for (let i = 0; i < genres.length; i++) {
+//         if (!musicObj[genres[i]]) {
+//             musicObj[genres[i]] = {songs: [{id: i, play: plays[i]}], totalPlay: plays[i]} ;
+//         } else {
+//             musicObj[genres[i]].songs.push({id: i, play: plays[i]});
+//             musicObj[genres[i]].totalPlay += plays[i]; 
+//         }
+//     }
+    
+//     const sortedGenres = Object.keys(musicObj).sort((a, b) => musicObj[b].totalPlay - musicObj[a].totalPlay);
+    
+//     sortedGenres.forEach((genre) => {
+//         musicObj[genre].songs = musicObj[genre].songs.sort((a, b) => b.play - a.play || a.id - b.id);
+        
+//         for (let i = 0; i < 2; i++) {
+//             bestAlbum.push(musicObj[genre].songs[i].id);
+//         }
+//     })
+    
+//     console.log(musicObj);
+//     console.log(bestAlbum);
+    
+//     return bestAlbum;
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+// 이 줄 부터, 위 문제의 핵심은~ 이라고 작성한 부분까지 첫 정답 풀이
 function solution(genres, plays) {
     const sortByGenres = {};
     const bestAlbum = [];
@@ -24,6 +65,8 @@ function solution(genres, plays) {
     
     return bestAlbum;
 }
+// 위 문제의 핵심은, 주어진 조건들을 이용해서 문제를 풀기 위해 객체 구조를 직접 커스터마이징
+// 해서 조건들을 만족시키면서 문제를 풀어나가는 것.
 
 
 // 1. 처음에 풀다가 막힌 풀이
