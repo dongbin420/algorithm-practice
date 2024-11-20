@@ -1,43 +1,3 @@
-// function solution(genres, plays) {
-//     const musicObj = {};
-//     const bestAlbum = [];
-    
-//     for (let i = 0; i < genres.length; i++) {
-//         if (!musicObj[genres[i]]) {
-//             musicObj[genres[i]] = {songs: [{id: i, play: plays[i]}], totalPlay: plays[i]} ;
-//         } else {
-//             musicObj[genres[i]].songs.push({id: i, play: plays[i]});
-//             musicObj[genres[i]].totalPlay += plays[i]; 
-//         }
-//     }
-    
-//     const sortedGenres = Object.keys(musicObj).sort((a, b) => musicObj[b].totalPlay - musicObj[a].totalPlay);
-    
-//     sortedGenres.forEach((genre) => {
-//         musicObj[genre].songs = musicObj[genre].songs.sort((a, b) => b.play - a.play || a.id - b.id);
-        
-//         for (let i = 0; i < 2; i++) {
-//             bestAlbum.push(musicObj[genre].songs[i].id);
-//         }
-//     })
-    
-//     console.log(musicObj);
-//     console.log(bestAlbum);
-    
-//     return bestAlbum;
-// }
-
-
-
-
-
-
-
-
-
-
-
-
 // 이 줄 부터, 위 문제의 핵심은~ 이라고 작성한 부분까지 첫 정답 풀이
 function solution(genres, plays) {
     const sortByGenres = {};
@@ -67,6 +27,31 @@ function solution(genres, plays) {
 }
 // 위 문제의 핵심은, 주어진 조건들을 이용해서 문제를 풀기 위해 객체 구조를 직접 커스터마이징
 // 해서 조건들을 만족시키면서 문제를 풀어나가는 것.
+
+// 0. 추후에 다시 풀이(복습)
+// function solution(genres, plays) {
+//     const musicObj = {};
+//     const bestAlbum = [];
+    
+//     for (let i = 0; i < genres.length; i++) {
+//         if (!musicObj[genres[i]]) {
+//             musicObj[genres[i]] = {songs: [{id: i, play: plays[i]}], totalPlay: plays[i]} ;
+//         } else {
+//             musicObj[genres[i]].songs.push({id: i, play: plays[i]});
+//             musicObj[genres[i]].totalPlay += plays[i]; 
+//         }
+//     }
+    
+//     const sortedGenres = Object.keys(musicObj).sort((a, b) => musicObj[b].totalPlay - musicObj[a].totalPlay);
+    
+//     sortedGenres.forEach((genre) => {
+//         // 이 부분을 처음엔 for문을 써서 항상 i가 0과 1일때 추가하도록 했는데, 곡 수가 1개 이하인 경우에 대해서 인덱스 초과 에러가 뜸. 따라서 아래와 같이 해결해야함.
+//         const songs = musicObj[genre].songs.sort((a, b) => b.play - a.play || a.id - b.id).slice(0, 2);;
+//         bestAlbum.push(...songs.map((song) => song.id))
+//     })
+    
+//     return bestAlbum;
+// }
 
 
 // 1. 처음에 풀다가 막힌 풀이
