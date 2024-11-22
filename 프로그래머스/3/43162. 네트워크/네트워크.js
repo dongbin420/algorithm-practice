@@ -1,19 +1,18 @@
-// bfs
+// dfs(스택, 1차 복습)
 function solution(n, computers) {
-    const visited = new Array(n).fill(false);
     let networks = 0;
+    const visited = new Array(n).fill(false);
     
-    const bfs = (startNode) => {
-        const queue = [startNode];
-        visited[startNode] = true;
+    const dfs = (startNode) => {
+        const stack = [startNode];
         
-        while (queue.length > 0) {
-            const node = queue.shift();
+        while (stack.length > 0) {
+            const node = stack.pop();
             
             for (let i = 0; i < n; i++) {
                 if (!visited[i] && computers[node][i] === 1) {
                     visited[i] = true;
-                    queue.push(i);
+                    stack.push(i);
                 }
             }
         }
@@ -22,12 +21,58 @@ function solution(n, computers) {
     for (let i = 0; i < n; i++) {
         if (!visited[i]) {
             networks++;
-            bfs(i);
+            dfs(i);
         }
     }
     
     return networks;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// bfs
+// function solution(n, computers) {
+//     const visited = new Array(n).fill(false);
+//     let networks = 0;
+    
+//     const bfs = (startNode) => {
+//         const queue = [startNode];
+//         visited[startNode] = true;
+        
+//         while (queue.length > 0) {
+//             const node = queue.shift();
+            
+//             for (let i = 0; i < n; i++) {
+//                 if (!visited[i] && computers[node][i] === 1) {
+//                     visited[i] = true;
+//                     queue.push(i);
+//                 }
+//             }
+//         }
+//     }
+    
+//     for (let i = 0; i < n; i++) {
+//         if (!visited[i]) {
+//             networks++;
+//             bfs(i);
+//         }
+//     }
+    
+//     return networks;
+// }
 
 // dfs(재귀 방식)
 // function solution(n, computers) {
