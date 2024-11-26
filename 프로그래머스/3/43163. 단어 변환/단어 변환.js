@@ -1,13 +1,12 @@
+// bfs를 활용한 첫번째 풀이
 function solution(begin, target, words) {
     const visited = {}
-    visited[begin] = false;
     
     for (const word of words) {
         visited[word] = false;
     }
     
     const queue = [[begin, 0]];
-    visited[begin] = true;
     
     while (queue.length > 0) {
         const [deletedWord, steps] = queue.shift();
