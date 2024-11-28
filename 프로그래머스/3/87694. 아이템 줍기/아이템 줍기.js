@@ -40,3 +40,7 @@ function solution(rectangle, characterX, characterY, itemX, itemY) {
         }
     }
 }
+
+// 완전하게 이해하지 못한 부분이 있음(다음에 다시 시도)
+// 1. SIZE를 두 배로 확장하는 이유
+// 2. map을 구성하는 for문 로직
