@@ -15,9 +15,9 @@ function solution(tickets) {
     graph[key].sort();
   }
     // 도착지는 있지만 출발지로는 단 한 번도 등장하지 않은 공항을 빈 배열로 할당해서, 그래프 탐색 시, undefined 체크 방지
-//     for (const [from, to] of tickets) {
-//   if (!graph[to]) graph[to] = [];
-// }
+    for (const [from, to] of tickets) {
+  if (!graph[to]) graph[to] = [];
+}
 
     const route = ["ICN"];
     const totalTickets = tickets.length;
@@ -28,7 +28,7 @@ function solution(tickets) {
   }
 
   const destinations = graph[currentAirport];
-  for (let i = 0; i < destinations?.length; i++) {
+  for (let i = 0; i < destinations.length; i++) {
     const nextAirport = destinations[i];
 
     // 현재 경로에서 다음 공항 방문
@@ -37,10 +37,11 @@ function solution(tickets) {
 
     // 다음 단계로 재귀 호출
     if (dfs(nextAirport, usedCount + 1)) {
-      return true; // 정답 찾으면 더 이상 탐색 불필요
+      return true; // 정답 찾으면(모든 티켓 사용 완료) 더 이상 탐색 불필요
     }
 
     // 백트래킹 (원상 복구)
+    // 재귀 호출로 인해, 도착지가 없을때 까지 탐색한 후, 모든 티켓을 사용하지 않은 상황을 확인하고 재귀적으로 이전에 넣은 도착지들을 하나하나 지우면서 원상복귀 시키는 과정
     route.pop();
     destinations.splice(i, 0, nextAirport);
   }
@@ -49,7 +50,7 @@ function solution(tickets) {
 }
 
   dfs("ICN", 0);
-  // dfs의 else에서 마지막 목적지가 가장 앞에 정렬되니 마지막에 정답을 위해 재정렬
+    
   return route;
 }
 
