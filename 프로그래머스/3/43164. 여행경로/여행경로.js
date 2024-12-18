@@ -15,9 +15,9 @@ function solution(tickets) {
     graph[key].sort();
   }
     // 도착지는 있지만 출발지로는 단 한 번도 등장하지 않은 공항을 빈 배열로 할당해서, 그래프 탐색 시, undefined 체크 방지
-    for (const [from, to] of tickets) {
-  if (!graph[to]) graph[to] = [];
-}
+//     for (const [from, to] of tickets) {
+//   if (!graph[to]) graph[to] = [];
+// }
 
     const route = ["ICN"];
     const totalTickets = tickets.length;
@@ -28,7 +28,7 @@ function solution(tickets) {
   }
 
   const destinations = graph[currentAirport];
-  for (let i = 0; i < destinations.length; i++) {
+  for (let i = 0; i < destinations?.length; i++) {
     const nextAirport = destinations[i];
 
     // 현재 경로에서 다음 공항 방문
