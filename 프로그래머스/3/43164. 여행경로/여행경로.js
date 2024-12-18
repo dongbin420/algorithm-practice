@@ -53,6 +53,8 @@ function solution(tickets) {
     
   return route;
 }
+//+splice 사용 대신, visited 배열을 사용하는게 효율성면에서 더 좋을 수도
+//+스택 방식으로도 구현해보는 시도
 
 
 // 오일러 경로
