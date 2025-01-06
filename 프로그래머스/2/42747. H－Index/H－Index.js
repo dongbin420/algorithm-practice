@@ -9,36 +9,9 @@ function solution(citations) {
         return i;
     }
     
-    return citations.length
+    // 끝까지 걸러지는 논문이 없다는 건 “모든 논문이 자기 순번만큼 인용”되었다는 의미이며, 따라서 논문 개수(전체 길이)만큼이 그대로 H-Index가 된다.
+    return citations.length;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function solution(citations) {
-//     citations.sort((a, b) => b - a);
-    
-//     for (let i = 0; i < citations.length; i++) {
-//         if (citations[i] >= i + 1) {
-//             continue;
-//         }
-        
-//         return i;
-//     }
-    
-//     // 끝까지 걸러지는 논문이 없다는 건 “모든 논문이 자기 순번만큼 인용”되었다는 의미이며, 따라서 논문 개수(전체 길이)만큼이 그대로 H-Index가 된다.
-//     return citations.length;
-// }
 
 // *정리하자면,
 // (i+1)은 ‘현재 논문이 이 이상 인용되었음을 기대하는 값’
