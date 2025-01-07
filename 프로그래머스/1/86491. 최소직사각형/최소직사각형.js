@@ -1,23 +1,49 @@
 function solution(sizes) {
-    let horizontalMax = 0;
-    let verticalMax = 0;
+    let width = 0;
+    let height = 0;
     
     for (let i = 0; i < sizes.length; i++) {
         const bigger = Math.max(sizes[i][0], sizes[i][1]);
         const smaller = Math.min(sizes[i][0], sizes[i][1]);
         
-        if (bigger > horizontalMax) {
-            horizontalMax = bigger;
+        if (width < bigger) {
+            width = bigger;
         }
         
-        if (smaller > verticalMax) {
-            verticalMax = smaller;
+        if (height < smaller) {
+            height = smaller;
         }
     }
     
-    return horizontalMax * verticalMax;
+    return width * height;
 }
 
+// 지갑의 한 변은 어떤 명함의 한 변보다 작아서는 안된다.(최소한 둘 중 한 변보다는 커야한다.)
+// 위와 같은 전제에서, 명함들은 두 변을 가질 것이고, 지갑의 긴 변은 명함들의 긴 변의 조합의 최댓값의 길이 이하이면 안된다. 따라서, 지갑의 긴 변(가로)는 명함들의 긴 변들의 조합의 최댓값이 목적을 충족하는 최소 길이가 된다.
+// 마찬가지로, 지갑의 남은 짧은 변은 명함들의 짧은 변 조합의 최댓값의 길이 이하이면 안된다. 따라서 지갑의 짧은 변(세로)는 명함들의 짧은 변들의 조합의 최댓값이 목적을 충족하는 최소 길이가 된다.
+
+// 두번째 풀이
+// function solution(sizes) {
+//     let horizontalMax = 0;
+//     let verticalMax = 0;
+    
+//     for (let i = 0; i < sizes.length; i++) {
+//         const bigger = Math.max(sizes[i][0], sizes[i][1]);
+//         const smaller = Math.min(sizes[i][0], sizes[i][1]);
+        
+//         if (bigger > horizontalMax) {
+//             horizontalMax = bigger;
+//         }
+        
+//         if (smaller > verticalMax) {
+//             verticalMax = smaller;
+//         }
+//     }
+    
+//     return horizontalMax * verticalMax;
+// }
+
+// 첫번째 풀이
 // function solution(sizes) {
 //     const horizontal = []
 //     const vertical = [];
