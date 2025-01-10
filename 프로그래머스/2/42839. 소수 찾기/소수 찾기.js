@@ -1,45 +1,86 @@
+// 다시 풀기(아래 풀이랑 같은 방식)
 function solution(numbers) {
     let answer = 0;
-    const numberArr = Array(numbers.length).fill(false);
+    const used = Array(numbers.length).fill(false);
     const numberSet = new Set();
     
-    const isPrimeNum = (num) => {
-        if (num === 1 || num === 0) {
-            return false;
-        }
+    const checkIsPrime = (num) => {
+        if (num < 2) return false;
         
-        for (let i = 2; i < num; i++) {
+        for (let i = 2; i <= Math.sqrt(num); i++) {
             if (num % i === 0) return false;
         }
         
         return true;
     }
     
-    // 아래의 다른 풀이 방법보다, 나는 이 방법이 더 직관적으로 이해가 됨.(방문 배열 사용)
-    const makeNumber = (str) => {
+    const makeNum = (str) => {
         if (str.length > 0) {
             numberSet.add(Number(str));
         }
         
         for (let i = 0; i < numbers.length; i++) {
-            if (!numberArr[i]) {
-                numberArr[i] = true;
-                makeNumber(str + numbers[i]); // 매개변수 순서: '1', '17' ->(1과 7이 다시 false로 백트래킹 -> 다시 매개변수 '7', '71')
-                numberArr[i] = false;
+            if (!used[i]) {
+                used[i] = true;
+                makeNum(str + numbers[i]);
+                used[i] = false;
             }
         }
     }
     
-    makeNumber('');
+    makeNum('');
     
     for (const num of numberSet) {
-        if (isPrimeNum(num)) {
+        if (checkIsPrime(num)) {
             answer++;
         }
     }
     
     return answer;
 }
+
+// function solution(numbers) {
+//     let answer = 0;
+//     const numberArr = Array(numbers.length).fill(false);
+//     const numberSet = new Set();
+    
+//     const isPrimeNum = (num) => {
+//         if (num === 1 || num === 0) {
+//             return false;
+//         }
+        
+//         for (let i = 2; i < num; i++) {
+//             if (num % i === 0) return false;
+//         }
+        
+//         return true;
+//     }
+    
+//     // 아래의 다른 풀이 방법보다, 나는 이 방법이 더 직관적으로 이해가 됨.(방문 배열 사용)
+//     const makeNumber = (str) => {
+//         if (str.length > 0) {
+//             numberSet.add(Number(str));
+//         }
+        
+//         for (let i = 0; i < numbers.length; i++) {
+//             if (!numberArr[i]) {
+//                 numberArr[i] = true;
+//                 makeNumber(str + numbers[i]); // 매개변수 순서: '1', '17' ->(1과 7이 다시 false로 백트래킹 -> 다시 매개변수 '7', '71')
+//                 numberArr[i] = false;
+//             }
+//         }
+//     }
+    
+//     makeNumber('');
+    
+//     for (const num of numberSet) {
+//         if (isPrimeNum(num)) {
+//             answer++;
+//         }
+//     }
+    
+//     return answer;
+// }
 
 // 오래 전에 풀었던 방식
 // function solution(numbers) {
