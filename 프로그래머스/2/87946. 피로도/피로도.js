@@ -62,6 +62,7 @@ function solution(k, dungeons) {
 //     const dfs = (fatigue, cnt) => {
 //         // 이 found는 이 dfs에서 적절한 시점에 cnt를 추출하는 데 사용됨.
 //         // found가 false인 경우(더 이상 갈 던전x)의 재귀 함수 실행은 그 시점까지 cnt를 추출해서 maxCnt와 비교하게 해주고, true인 경우는 추출 하면 안됨 
+//         // 사실, 단순 최댓값을 찾는 문제이므로, found 필요없이 매번 호출마다 cnt를 maxCnt와 비교해도 된다. 결국에는 최댓값으로 수렴되기 때문. 하지만, 더 이상 방문할 수 없을때만 maxCnt를 비교한다 라는 의미를 강조하기 위해 이 found를 쓰면 좋음.
 //         let found = false;
         
 //         for (let i = 0; i < dungeons.length; i++) {
