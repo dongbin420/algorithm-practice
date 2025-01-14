@@ -1,87 +1,88 @@
 // 순열 방식
-// function solution(k, dungeons) {
-//     const indices = dungeons.map((_, i) => i);
-//     let maxCnt = 0;
-    
-//     const getPermutations = (arr) => {
-//         const result = [];
-        
-//         const permute = (temp, used) => {
-//             if (temp.length === arr.length) {
-//                 result.push([...temp]);
-                
-//                 return;
-//             }
-            
-//             for (let i = 0; i < arr.length; i++) {
-//                 if (used[i]) continue;
-//                 used[i] = true;
-//                 temp.push(arr[i]);
-//                 permute(temp, used);
-//                 temp.pop();
-//                 used[i] = false;
-//             }
-//         }
-        
-//         permute([], Array(arr.length).fill(false));
-        
-//         return result;
-//     }
-    
-//     const perms = getPermutations(indices);
-    
-//     for (const perm of perms) {
-//         let fatigue = k;
-//         let cnt = 0;
-        
-//         for (const idx of perm) {
-//             const [required, consume] = dungeons[idx];
-            
-//             if (fatigue >= required) {
-//                 fatigue -= consume;
-//                 cnt++;
-//             } else {
-//                 break;
-//             }
-//         }
-        
-//         if (cnt > maxCnt) {
-//             maxCnt = cnt;
-//         }
-//     }
-    
-//     return maxCnt;
-// }
-
-// // dfs(백트래킹 방식)
 function solution(k, dungeons) {
+    const indices = dungeons.map((_, i) => i);
     let maxCnt = 0;
-    const visited = Array(dungeons.length).fill(false);
     
-    const dfs = (fatigue, cnt) => {
-        // 이 found는 이 dfs에서 적절한 시점에 cnt를 추출하는 데 사용됨.
-        // found가 false인 경우(더 이상 갈 던전x)의 재귀 함수 실행은 그 시점까지 cnt를 추출해서 maxCnt와 비교하게 해주고, true인 경우는 추출 하면 안됨 
-        let found = false;
+    const getPermutations = (arr) => {
+        const result = [];
         
-        for (let i = 0; i < dungeons.length; i++) {
-            const [required, consume] = dungeons[i];
+        const permute = (temp, used) => {
+            if (temp.length === arr.length) {
+                // temp를 그대로 push 하면 이 temp를 참조하는 모든 값이 참조를 공유하기 때문에, 비정상적으로 작동할 위험이 있어, 복사본으로 push
+                result.push([...temp]);
+                
+                return;
+            }
             
-            if (!visited[i] && fatigue >= required) {
-                found = true;
-                visited[i] = true;
-                dfs(fatigue - consume, cnt + 1);
-                visited[i] = false;
+            for (let i = 0; i < arr.length; i++) {
+                if (used[i]) continue;
+                used[i] = true;
+                temp.push(arr[i]);
+                permute(temp, used);
+                temp.pop();
+                used[i] = false;
             }
         }
         
-        if (!found) {
-            maxCnt = Math.max(maxCnt, cnt);
+        permute([], Array(arr.length).fill(false));
+        
+        return result;
+    }
+    
+    const perms = getPermutations(indices);
+    
+    for (const perm of perms) {
+        let fatigue = k;
+        let cnt = 0;
+        
+        for (const idx of perm) {
+            const [required, consume] = dungeons[idx];
+            
+            if (fatigue >= required) {
+                fatigue -= consume;
+                cnt++;
+            } else {
+                break;
+            }
+        }
+        
+        if (cnt > maxCnt) {
+            maxCnt = cnt;
         }
     }
     
-    dfs(k, 0);
     return maxCnt;
 }
+
+// // dfs(백트래킹 방식)
+// function solution(k, dungeons) {
+//     let maxCnt = 0;
+//     const visited = Array(dungeons.length).fill(false);
+    
+//     const dfs = (fatigue, cnt) => {
+//         // 이 found는 이 dfs에서 적절한 시점에 cnt를 추출하는 데 사용됨.
+//         // found가 false인 경우(더 이상 갈 던전x)의 재귀 함수 실행은 그 시점까지 cnt를 추출해서 maxCnt와 비교하게 해주고, true인 경우는 추출 하면 안됨 
+//         let found = false;
+        
+//         for (let i = 0; i < dungeons.length; i++) {
+//             const [required, consume] = dungeons[i];
+            
+//             if (!visited[i] && fatigue >= required) {
+//                 found = true;
+//                 visited[i] = true;
+//                 dfs(fatigue - consume, cnt + 1);
+//                 visited[i] = false;
+//             }
+//         }
+        
+//         if (!found) {
+//             maxCnt = Math.max(maxCnt, cnt);
+//         }
+//     }
+    
+//     dfs(k, 0);
+//     return maxCnt;
+// }
 
 // 메인 아이디어: 던전을 방문하는 순서의 모든 경우를 다 검사해보고 제일 많이 방문하는거 고르면 되는거 아니야?
 // 구체화: 1 -> 2 -> 3, 1 -> 3 -> 2, 2 -> 1 -> 3 등 여러 순서의 경우를 생각하고, 피로도와 함께 계산하고, 몇 개씩 방문했는지 검사 후, 최대 값 출력
