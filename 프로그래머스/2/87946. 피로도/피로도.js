@@ -1,53 +1,38 @@
 function solution(k, dungeons) {
-    const indices = dungeons.map((_, idx) => idx);
+    const visited = Array(dungeons.length).fill(false);
     let maxCnt = 0;
     
-    const permutation = (arr) => {
-        const result = [];
+    const dfs = (fatigue, cnt) => {
+        let found = false;
         
-        const permute = (temp, used) => {
-            if (arr.length === temp.length) {
-                result.push([...temp]);
-                return;
-            }
+        for (let i = 0; i < dungeons.length; i++) {
+            const [required, consume] = dungeons[i];
             
-            for (let i = 0; i < arr.length; i++) {
-                if (used[i]) continue;
-                used[i] = true;
-                temp.push(arr[i])
-                permute(temp, used);
-                used[i] = false;
-                temp.pop();
+            if (!visited[i] && fatigue >= required) {
+                found = true;
+                visited[i] = true;
+                dfs(fatigue - consume, cnt + 1);
+                visited[i] = false;
             }
         }
         
-        permute([], Array(arr.length).fill(false));
-        
-        return result;
-    }
-    
-    const perms = permutation(indices);
-    
-    for (const perm of perms) {
-        let fatigue = k;
-        let cnt = 0;
-        
-        for (idx of perm) {
-            const [required, consume] = dungeons[idx];
-            
-            if (fatigue >= required) {
-                fatigue -= consume;
-                cnt++;
-            } else {
-                break;
-            }
+        if (!found) {
+            maxCnt = Math.max(maxCnt, cnt)
         }
-        
-        maxCnt = Math.max(maxCnt, cnt);
     }
     
+    dfs(k, 0);
     return maxCnt;
 }
+
+
+
+
+
+
+
+
+
 
 
 
