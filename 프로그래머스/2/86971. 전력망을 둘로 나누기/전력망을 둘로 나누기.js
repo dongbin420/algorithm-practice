@@ -1,62 +1,51 @@
 // (3) 서브트리 크기를 한 번에 계산하는 방법
-// 간선을 끊을때마다 dfs를 하는게 아니라, 한 번의 bfs로 모든 서브 트리의 크기를 미리 계산해서 사용하는 방식
+// 간선을 끊을때마다 dfs를 하는게 아니라, 한 번의 dfs로 모든 서브 트리의 크기를 미리 계산해서 사용하는 방식
 // 단 한번의 dfs로, O(n)의 시간복잡도를 가져 (1) 방법보다 효율적 
 function solution(n, wires) {
-    const graph = Array.from({ length: n + 1 }, () => []);
-    
-    for (const [v1, v2] of wires) {
-        graph[v1].push(v2);
-        graph[v2].push(v1);
-    }
-    
-    const subtreeSize = Array(n + 1).fill(0);
-    const visited = Array(n + 1).fill(false);
-    
-    const dfs = (node) => {
-        visited[node] = true;
-        subtreeSize[node] = 1;
-        
-        for (const neighbor of graph[node]) {
-            if (!visited[neighbor]) {
-                subtreeSize[node] += dfs(neighbor);
-            }
-        }
-        
-        return subtreeSize[node];
+  // 결과: [[], [], [], []] 형태로, n + 1 길이의 배열 생성
+  const tree = Array.from({ length: n + 1 }, () => []);
+
+  for (const [v1, v2] of wires) {
+    tree[v1].push(v2);
+    tree[v2].push(v1);
+  }
+
+  // 각 송전탑을 루트로 하는 서브트리의 송전탑 개수
+  const subtreeSize = Array(n + 1).fill(0);
+  // dfs를 위한 방문 배열
+  const visited = Array(n + 1).fill(false);
+
+  // dfs로 트리를 탐색하면서, 모든 송전탑 각각을 루트로 하는 서브트리의 개수를 각각 구함 (ex 1의 서브트리 개수 4, 2는 3, 3은 2, 1은 1)
+  const dfs = (node) => {
+    visited[node] = true;
+    subtreeSize[node] = 1;
+
+    for (const neighbor of tree[node]) {
+      if (!visited[neighbor]) {
+        subtreeSize[node] += dfs(neighbor);
+      }
     }
 
-    dfs(1);
-    
-    let minDiff = Infinity;
-    
-    for (const [v1, v2] of wires) {
-        const size1 = subtreeSize[v1] < subtreeSize[v2] ? subtreeSize[v1] : subtreeSize[v2];
-        const size2 = n - size1;
-        const diff = Math.abs(size1 - size2);
-        
-        minDiff = Math.min(minDiff, diff);
-    }
-    
-    return minDiff;
+    return subtreeSize[node];
+  }
+
+  dfs(1);
+
+  let minDiff = Infinity;
+
+  // 트리에서 전선을 한개씩 끊어보기
+  for (const [v1, v2] of wires) {
+    // 두 송전탑 사이를 끊었을 때, 둘 중 서브트리 개수가 적은 송전탑의 서브트리만 옳은 전력망이 될 수 있음
+    // 예를 들어 v1 = 1, v2 = 2일 때, subtreeSize[v1]은 4, subtreeSize[v2]는 3이고, 1과 2사이를 끊으면 subtreeSize[v2]는 옳은 한 개의 전력망이 되지만, subtreeSize[v1]은 아님. 
+    // 이를 좀 더, 쉽고 명료한 방식으로 설명하면 두 송전탑 사이를 끊었을 때 더 큰 서브트리는
+    // 자기자신(부모) + 자식쪽 전부를 나타내 잘린 하나의 전력망보다 더 클 수밖에 없지만, 작은 서브트리는 부모쪽을 포함하지 않기에 하나의 옳은 전력망이 될 수 있는 것.
+    const size1 = subtreeSize[v1] < subtreeSize[v2] ? subtreeSize[v1] : subtreeSize[v2];
+    const size2 = n - size1;
+    minDiff = Math.min(minDiff, Math.abs(size1 - size2));
+  }
+
+  return minDiff;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // (2) (1) 방식 다시 풀어보기
 // function solution(n, wires) {
