@@ -21,7 +21,6 @@ function solution(progresses, speeds) {
             answer.push(completedCnt);
         }
         
-        console.log(progresses);
     }
     
     return answer;
