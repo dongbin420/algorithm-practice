@@ -1,14 +1,28 @@
 // 다시 풀기 1
-function solution(s) {
-    const sortedArr = [...s].sort((a, b) => b.charCodeAt(0) - a.charCodeAt(0)).join('');
+// function solution(s) {
+//     const sortedArr = [...s].sort((a, b) => b.charCodeAt(0) - a.charCodeAt(0)).join('');
     
-    return sortedArr;
-}
+//     return sortedArr;
+// }
 
 // 다시 풀기 2
 // function solution(s) {
-    
+//     return s.split('').sort().reverse().join('');
 // }
+
+// 다시 풀기 3
+function solution(s) {
+    return s.split('').sort((a, b) => {
+        if(a > b) {
+            return -1;
+        } else {
+            return 1;
+        }
+    }).join('');
+}
+// a > b 처럼 대소 비교로는 알파벳 순서를 비교할 수 있는데,
+// 단순 a - b 처럼 연산으로는 계산이 힘들다. 그래서 조건문을
+// 이용해야하는 것.
 
 
 // localeCompare 사용법
@@ -42,13 +56,14 @@ function solution(s) {
 // 이렇게 하면 또한 대문자가 소문자보다 작게 여겨지게끔 하는 부분도
 // 커버할 수 있는데, 가장 마지막 알파벳인 z인 경우도 대문자 Z의 아스키 코드는 90, 가장 첫번째 알파벳인 a의 소문자는 97로 대문자가 항상 더 작게 여겨짐.
 
-
+// 첫 풀이
 // function solution(s) {
 //     let newStr = '';
 //     let newStr2 = '';
 //     let newArr = [];
 //     let newArr2 = []
 //     for(let i = 0; i < s.length; i++) {
+        
 //         if(s[i] === s[i].toLowerCase()) {
 //             newArr.push(s[i])
 //         } else {
