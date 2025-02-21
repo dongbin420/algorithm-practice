@@ -27,57 +27,30 @@
 // }
 
 // 처음 푼 방식(조금 비효율적일 수 있음)
-// function solution(progresses, speeds) {
-//     const answer = [];
-    
-//     while (progresses.length > 0) {
-//         let completedCnt = 0;
-        
-//         for (let i = 0; i < progresses.length; i++) {
-//             if (progresses[i] < 100) {
-//                 progresses[i] += speeds[i];
-//             }
-            
-//             if (progresses[0] >= 100) {
-//                 completedCnt++;
-//                 progresses.shift();
-//                 speeds.shift();
-//                 i--;
-//             }
-//         }
-        
-//         if (completedCnt > 0) {
-//             answer.push(completedCnt);
-//         }
-        
-//     }
-    
-//     return answer;
-// }
-
-
 function solution(progresses, speeds) {
-    var answer = [];
-
-    while(speeds.length > 0) {
-        // 개발
-        for(let i in speeds) {
-            if(progresses[i] < 100) {
+    const answer = [];
+    
+    while (progresses.length > 0) {
+        let completedCnt = 0;
+        
+        for (let i = 0; i < progresses.length; i++) {
+            if (progresses[i] < 100) {
                 progresses[i] += speeds[i];
             }
+            
+            if (progresses[0] >= 100) {
+                completedCnt++;
+                progresses.shift();
+                speeds.shift();
+                i--;
+            }
         }
-
-        // 배포
-        let deploy_count = 0;
-        while(progresses[0] >= 100) {
-            progresses.shift();
-            speeds.shift();
-            deploy_count++;
+        
+        if (completedCnt > 0) {
+            answer.push(completedCnt);
         }
-        if(deploy_count > 0) {
-            answer.push(deploy_count);
-        }
+        
     }
-
+    
     return answer;
 }
