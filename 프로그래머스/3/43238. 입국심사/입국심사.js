@@ -1,3 +1,4 @@
+// 문제를 푸는 모든 과정을 노션 알고리즘 -> 이분탐색 문서에 작성해놓음
 function solution(n, times) {
   let left = 1;
   let right = n * Math.max(...times);
@@ -19,20 +20,6 @@ function solution(n, times) {
 
   return left;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // 오래 전에 풀었던 방식
 // function solution(n, times) {
