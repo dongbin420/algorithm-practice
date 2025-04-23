@@ -1,3 +1,6 @@
+// 아래, 처음에 푼 풀이의 잘못된 점을 파악하고,
+// 끝 점을 기준으로 카메라를 설치해간다는 그리디적 아이디어를
+// 다시 도출하고 풀면 아래와 같이 간단하게 풀 수 있음.
 function solution(routes) {
   routes.sort((a, b) => a[1] - b[1]);
   let lastCamera;
@@ -6,7 +9,7 @@ function solution(routes) {
   for (let i = 0; i < routes.length; i++) {
       const [start, end] = routes[i];
       
-      if (lastCamera && start <= lastCamera) {
+      if (lastCamera !== undefined && start <= lastCamera) { // lastCamera의 끝 값이 0일 경우도 있기 때문에, undefined로 판단하는게 더 좋을 것으로 보임.
           continue;
       } else {
           lastCamera = end;
