@@ -3,7 +3,10 @@ function solution(N, number) {
 
   for (let i = 1; i <= 8; i++) {
     dp[i].add(Number(String(N).repeat(i)));
-
+    // j인덱스 설정, dp탐색 인덱스를 잘 설정하는게 중요
+    // 예를 들어, i가 3일때는 1, 2 그리고 2, 1 인덱스에 대해 탐색해야 하므로,
+    // j의 범위를 1부터 i - 1 즉 1부터 2까지 탐색해야 1, 2와 2, 1에 대해
+    // 탐색하므로, 이렇게 인덱스를 설정하는 것.
     for (let j = 1; j < i; j++) {
       for (const a of dp[j]) {
         for (const b of dp[i - j]) {
