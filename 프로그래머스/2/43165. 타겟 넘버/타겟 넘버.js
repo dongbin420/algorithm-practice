@@ -1,24 +1,24 @@
 // dfs 방식(재귀)
-function solution(numbers, target) {
-    let cases = 0;
+// function solution(numbers, target) {
+//     let cases = 0;
     
-    const dfs = (idx, curSum) => {
-        if (idx === numbers.length) {
-            if (curSum === target) {
-                cases++;
-            }
+//     const dfs = (idx, curSum) => {
+//         if (idx === numbers.length) {
+//             if (curSum === target) {
+//                 cases++;
+//             }
             
-            return;
-        }
+//             return;
+//         }
         
-        dfs(idx + 1, curSum + numbers[idx]);
-        dfs(idx + 1, curSum - numbers[idx]);
-    }
+//         dfs(idx + 1, curSum + numbers[idx]);
+//         dfs(idx + 1, curSum - numbers[idx]);
+//     }
     
-    dfs(0, 0);
+//     dfs(0, 0);
     
-    return cases;
-}
+//     return cases;
+// }
 
 // DFS방식(스택)
 // function solution(numbers, target) {
@@ -69,4 +69,26 @@ function solution(numbers, target) {
 
 
 
+const solution = (numbers, target) => {
+  let cnt = 0;
+  
+  const dfs = (start, sum) => {
+    if (sum === target && start === numbers.length) {
+      cnt++;
 
+      return;
+    }
+
+    let minus = -numbers[start];
+    let plus = numbers[start];
+
+    if (start < numbers.length) {
+      dfs(start + 1, sum + minus);
+      dfs(start + 1, sum + plus);
+    }
+  }
+
+  dfs(0, 0);
+
+  return cnt;
+}
