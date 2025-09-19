@@ -1,48 +1,3 @@
-// dfs(스택, 1차 복습)
-function solution(n, computers) {
-    let networks = 0;
-    const visited = new Array(n).fill(false);
-    
-    const dfs = (startNode) => {
-        const stack = [startNode];
-        
-        while (stack.length > 0) {
-            const node = stack.pop();
-            
-            for (let i = 0; i < n; i++) {
-                if (!visited[i] && computers[node][i] === 1) {
-                    visited[i] = true;
-                    stack.push(i);
-                }
-            }
-        }
-    }
-    
-    for (let i = 0; i < n; i++) {
-        if (!visited[i]) {
-            networks++;
-            dfs(i);
-        }
-    }
-    
-    return networks;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // bfs
 // function solution(n, computers) {
 //     const visited = new Array(n).fill(false);
@@ -129,3 +84,33 @@ function solution(n, computers) {
     
 //     return networks
 // }
+
+const solution = (n, computers) => {
+  let networks = 0;
+  const visited = Array(n).fill(false);
+
+  const dfs = (start) => {  
+    const stack = [start];
+    visited[start] = true;
+
+    while (stack.length > 0) {
+      const idx = stack.pop();
+
+      for (let j = 0; j < n; j++) {
+        if (!visited[j] && computers[idx][j] === 1) {
+          stack.push(j);
+          visited[j] = true;
+        }
+      }
+    }
+  }
+
+  for (let i = 0; i < n; i++) {
+    if (!visited[i]) {
+      dfs(i);
+      networks++;
+    }
+  }
+
+  return networks;
+}
